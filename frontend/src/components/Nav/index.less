@@ -1,0 +1,120 @@
+@font-color: rgba(255, 255, 255, 0.96);
+@background-dark: rgba(32, 33, 35, 1);
+@background-lightdark: rgba(141, 141, 159, 0.1);
+
+.nav {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 260px;
+  height: 100%;
+  padding: 8px;
+  background-color: @background-dark;
+  color: @font-color;
+  .create {
+    height: 44px;
+    margin-bottom: 8px;
+
+    :global {
+      .ant-btn {
+        width: 100%;
+        height: 100%;
+        padding: 12px;
+        border-color: hsla(0, 0%, 100%, 0.2);
+        text-align: left;
+        color: @font-color;
+        background-color: @background-dark;
+        &:hover {
+          background-color: @background-lightdark;
+        }
+      }
+    }
+  }
+
+  .menu {
+    height: 220px;
+    :global {
+      .ant-menu-item-selected {
+        background-color: @background-dark;
+      }
+    }
+  }
+  .menu,
+  .conversations {
+    :global {
+      .ant-menu {
+        color: @font-color;
+        background-color: @background-dark;
+        caret-color: transparent;
+        .ant-menu-item-selected {
+          color: @font-color;
+        }
+        .ant-menu-item:hover {
+          background-color: @background-lightdark;
+          color: @font-color;
+        }
+      }
+    }
+  }
+  .conversations {
+    flex: 1;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      height: 1rem;
+      width: 0.5rem;
+      background-color: rgba(86, 88, 105, 1);
+      visibility: hidden;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(217, 217, 227, 0.8);
+      border-color: rgba(255, 255, 255, 1);
+      border-radius: 9999px;
+      border-width: 1px;
+      visibility: hidden;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      border-radius: 9999px;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb,
+      &::-webkit-scrollbar {
+        visibility: visible;
+      }
+    }
+    :global {
+      .ant-menu-item {
+        position: relative;
+        height: 44px;
+        padding-right: 5rem;
+        line-height: 44px;
+        .ant-input {
+          width: 85%;
+          height: 60%;
+          background: inherit;
+          color: white;
+          border-radius: 0;
+          caret-color: white;
+        }
+        :local {
+          .text {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        .ant-space {
+          position: absolute;
+          right: 3px;
+        }
+      }
+      .ant-menu-item-selected {
+        background-color: @background-lightdark;
+      }
+    }
+  }
+}
+@media (max-width: 800px) {
+  .nav {
+    display: none;
+  }
+}
