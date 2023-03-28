@@ -1,9 +1,8 @@
-const axios = require("axios");
-
-const apiKey = process.env.API_KEY;
-const endpoint = "https://api.openai.com/v1/chat/completions";
+import axios from "axios";
 
 export async function generateResponse(messages, max_tokens = 1000) {
+  const apiKey = process.env.API_KEY;
+  const endpoint = "https://api.openai.com/v1/chat/completions";
   const response = await axios.post(
     endpoint,
     {
