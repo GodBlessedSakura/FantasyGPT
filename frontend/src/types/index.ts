@@ -6,6 +6,7 @@ interface User {
 
 interface Topic {
   id: string,
+  name:string,
   conversations: Array<Conversation>
 }
 

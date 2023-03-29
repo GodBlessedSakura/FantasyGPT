@@ -8,9 +8,7 @@ import request from '@/utils/request';
 import { clearTokens } from '@/utils/token';
 import { history, useParams } from 'umi';
 
-type MenuItem = Required<MenuProps>['items'][number];
-
-export default function Nav(props: navProps) {
+export default function Nav() {
   const [value, setValue] = useState<string | undefined>(undefined);
   const [topics, setTopics] = useState<Topic[]>([]);
   const getSelectedKey = () => {
@@ -111,33 +109,6 @@ export default function Nav(props: navProps) {
       )}
     </Menu.Item>
   ));
-  function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-    children?: MenuItem[],
-    type?: 'group',
-  ): MenuItem {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    } as MenuItem;
-  }
-
-  const btnItems: MenuItem[] = [
-    getItem('Clear Conversations', '1', <MyIcon type="icon-delete" />),
-    getItem('Dark Mode', '2', <MyIcon type="icon-moon" />),
-    getItem('My Account', '3', <MyIcon type="icon-account" />),
-    getItem('Updates & FAQ', '4', <MyIcon type="icon-forward" />),
-    getItem(
-      'Log Out',
-      '5',
-      <MyIcon type="icon-logout" onClick={handleLogOut} />,
-    ),
-  ];
 
   return (
     <div className={styles.nav}>
@@ -152,14 +123,28 @@ export default function Nav(props: navProps) {
         </Menu>
       </div>
       <div className={styles.menu}>
-        <Menu items={btnItems} />
+        <Menu>
+          <Menu.Item key="1" icon={<MyIcon type="icon-delete" />}>
+            Clear Conversations
+          </Menu.Item>
+          <Menu.Item key="1" icon={<MyIcon type="icon-moon" />}>
+            Dark Mode
+          </Menu.Item>
+          <Menu.Item key="1" icon={<MyIcon type="icon-account" />}>
+            My Account
+          </Menu.Item>
+          <Menu.Item key="1" icon={<MyIcon type="icon-forward" />}>
+            Updates & FAQ
+          </Menu.Item>
+          <Menu.Item
+            key="1"
+            icon={<MyIcon type="icon-logout" />}
+            onClick={handleLogOut}
+          >
+            Log Out
+          </Menu.Item>
+        </Menu>
       </div>
     </div>
   );
-}
-
-type navProps = {};
-interface Topic {
-  id: string;
-  name: string;
 }
