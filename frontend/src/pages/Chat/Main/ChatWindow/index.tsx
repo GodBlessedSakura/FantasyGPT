@@ -1,6 +1,8 @@
-import { Avatar } from 'antd';
 import SVG from '@/assets/GPT';
-import Highlight from 'react-highlight';
+import Markdown from '@/components/Markdown';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import styles from './index.less';
 
 export default function ChatWindow(props: chatWindowProps) {
@@ -44,7 +46,7 @@ export default function ChatWindow(props: chatWindowProps) {
               {item.role === 'assistant' ? <SVG /> : 'U'}
             </div>
             <div style={{ flex: '1' }}>
-              <Highlight>{item.text}</Highlight>
+              <Markdown>{item.text}</Markdown>
             </div>
           </div>
         </div>

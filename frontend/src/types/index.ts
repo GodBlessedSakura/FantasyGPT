@@ -15,3 +15,7 @@ interface Conversation {
   role:string,
   text:string
 }
+
+interface markdownProps {
+ children:string
+}

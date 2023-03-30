@@ -1,26 +1,30 @@
-// import React from 'react';
-// import remark from 'remark';
-// import remarkReact from 'remark-react';
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-// const CodeBlock = ({ value, language }) => {
-//   return (
-//     <SyntaxHighlighter language={language} style={darcula}>
-//       {value}
-//     </SyntaxHighlighter>
-//   );
-// };
-
-// const renderers = {
-//   code: CodeBlock,
-// };
-
-// const Markdown = ({ source }) => {
-//   const result = remark()
-// .use(remarkReact, { remarkReactComponents: renderers })
-//     .processSync(source);
-//   return <div>{result.contents}</div>;
-// };
-
-// export default Markdown;
+export default function Markdown(props: markdownProps) {
+  return (
+    <ReactMarkdown
+      components={{
+        code({ node, inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || '');
+          return !inline && match ? (
+            <SyntaxHighlighter
+              children={String(children).replace(/\n$/, '')}
+              style={dark}
+              language={match[1]}
+              PreTag="div"
+              {...props}
+            />
+          ) : (
+            <code className={className} {...props}>
+              {children}
+            </code>
+          );
+        },
+      }}
+    >
+      {props.children}
+    </ReactMarkdown>
+  );
+}
