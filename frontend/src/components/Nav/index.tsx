@@ -103,7 +103,10 @@ export default function Nav() {
           />
           <MyIcon
             type="icon-delete-light"
-            onClick={() => handleDeleteTopic(data.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteTopic(data.id);
+            }}
           />
         </Space>
       )}
@@ -127,17 +130,17 @@ export default function Nav() {
           <Menu.Item key="1" icon={<MyIcon type="icon-delete" />}>
             Clear Conversations
           </Menu.Item>
-          <Menu.Item key="1" icon={<MyIcon type="icon-moon" />}>
+          <Menu.Item key="2" icon={<MyIcon type="icon-moon" />}>
             Dark Mode
           </Menu.Item>
-          <Menu.Item key="1" icon={<MyIcon type="icon-account" />}>
+          <Menu.Item key="3" icon={<MyIcon type="icon-account" />}>
             My Account
           </Menu.Item>
-          <Menu.Item key="1" icon={<MyIcon type="icon-forward" />}>
+          <Menu.Item key="4" icon={<MyIcon type="icon-forward" />}>
             Updates & FAQ
           </Menu.Item>
           <Menu.Item
-            key="1"
+            key="5"
             icon={<MyIcon type="icon-logout" />}
             onClick={handleLogOut}
           >
