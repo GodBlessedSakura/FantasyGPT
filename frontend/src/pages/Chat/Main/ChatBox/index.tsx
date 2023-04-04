@@ -8,7 +8,7 @@ const { Option } = Select;
 export default function ChatBox(props: chatBoxProps) {
   const [form] = Form.useForm();
   const [isProcessing, setProcessing] = useState<boolean>(false);
-  const [mode, setMode] = useState<string>('Classic');
+  const [mode, setMode] = useState<string>('Smart');
 
   const { id, onSendConversation } = props;
   const handleSendMessage = async (e) => {
