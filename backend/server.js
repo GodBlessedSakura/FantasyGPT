@@ -12,6 +12,7 @@ import cacheControl from "koa-cache-control";
 import onerror from "koa-onerror";
 import logger from "koa-logger";
 import helmet from "koa-helmet";
+import { loadModel } from "@/utils/tfnlp";
 
 // 配置环境变量
 dotenv.config();
@@ -28,6 +29,14 @@ app.keys = ["some secret hurr"];
 // 将捕获的错误消息生成友好的错误页面（仅限开发环境）
 onerror(app);
 
+// 加载nlp模型
+const initModel = async () => {
+  await loadModel();
+  console.log("Tenserflow model loaded");
+};
+initModel();
+
+// app挂载中间件
 app
   // 在命令行打印日志
   .use(logger())

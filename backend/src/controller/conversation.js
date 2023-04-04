@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { UserModel, TopicModel, ConversationModel } from "@/models";
 import response from "@/utils/response";
 import logger from "@/utils/logger";
+import { getRelatedConversations } from "@/utils/tenserflow";
 import { generateResponse } from "@/service/gpt";
 
 export default class Conversation {
@@ -12,6 +13,7 @@ export default class Conversation {
         topicId: Joi.string().required(),
         role: Joi.string().required(),
         text: Joi.string().required().min(1),
+        mode: Joi.string().required().min(1),
       });
 
       const { error, value } = schema.validate(ctx.request.body);
@@ -27,7 +29,7 @@ export default class Conversation {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
       const isAdmin = { payload };
 
-      const { topicId, role, text } = value;
+      const { topicId, role, text, mode } = value;
       const userConversation = await ConversationModel.create({
         topicId,
         role: "user",
@@ -54,14 +56,31 @@ export default class Conversation {
         );
 
       const contextFrom = isAdmin === true ? -40 : -10;
-      const conversations = topic.conversations
-        .slice(isAdmin)
-        .map(({ role, text }) => {
+      let conversations;
+      if (mode === "Classic") {
+        conversations = topic.conversations
+          .slice(contextFrom)
+          .map(({ role, text }) => {
+            return {
+              role,
+              content: text,
+            };
+          });
+      } else if (mode === "Smart") {
+        conversations = await getRelatedConversations(
+          topic.conversations,
+          0.45
+        );
+        conversations = conversations.map(({ role, text }) => {
           return {
             role,
             content: text,
           };
         });
+      } else if (mode === "Customize") {
+      } else {
+        return response.error(ctx, "Invalid Mode.");
+      }
 
       // Todo:Context, token-limit
       const maxTokens = isAdmin === true ? 5000 : 1000;

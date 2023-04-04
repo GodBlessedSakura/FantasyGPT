@@ -66,7 +66,7 @@ const request = extend({
   errorHandler, // 默认错误处理
   prefix: '/api',
   credentials: 'include', // 默认请求是否带上cookie
-  timeout: 20000,
+  timeout: 40000,
 });
 
 /**
